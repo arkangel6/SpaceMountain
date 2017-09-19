@@ -13,14 +13,20 @@ public class GamePanel extends JPanel implements ActionListener{
 	private int backgroundHeight = 0;
 	int frameWidth;
 	int frameHeight;
-	int y1;
-	int y2;
-	
+	int y1 = 0;
+	int y2 = 500;
+	int x;
+	Unicorn unicorn = new Unicorn(150, 0 ,50,50);
+	ObjectManager manager;
 	
 	public GamePanel(int frameWidth, int frameHeight){
-	Timer timer = new Timer(1000/60, this);
+	this.frameHeight = frameHeight;
+	this.frameWidth = frameWidth;
+	Timer timer = new Timer(x, this);
 	timer.addActionListener(this);
 	
+	manager = new ObjectManager();
+	manager.addObject(unicorn);
 	try {
 		background = ImageIO.read(getClass().getResource("image.png"));
 		backgroundHeight = background.getHeight(); 
@@ -28,16 +34,24 @@ public class GamePanel extends JPanel implements ActionListener{
 		catch (Exception e) {
 		System.out.println("no background image");
 	}
+	
+	timer.start();
+	if(timer.isRunning()){
+		System.out.println("true");
+		}
+		
 	}
+	
+	
 	
 	
 	
 	public void paintComponent(Graphics g){
-		g.drawImage(background, 0, 0, frameWidth, frameHeight, 0, y1, frameWidth, y2, this);
+		g.drawImage(background, 0, 0, frameWidth, frameHeight, 0, y1, frameWidth, y2 , this);
 	}
 	
 	
-	private int scrollSpeed = 5;
+	private int scrollSpeed = 10;
 	public void moveBackground() {
 		if(y1>=(backgroundHeight-frameHeight)) {
 			y1 = 0;
@@ -53,7 +67,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		moveBackground();
-		
+	
 	}
 
 }
